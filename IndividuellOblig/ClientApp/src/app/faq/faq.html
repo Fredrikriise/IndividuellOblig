@@ -1,0 +1,36 @@
+<head>
+  <title>Vy - Kundeservice</title>
+  <base href="/" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+  <h1>FAQ - Frequently asked questions</h1>
+
+  <mat-tree [dataSource]="nestedDataSource" [treeControl]="nestedTreeControl" class="faq-tree">
+    <mat-tree-node *matTreeNodeDef="let node">
+      <li class="mat-tree-node">
+        <button mat-icon-button disabled></button>
+        {{node.faq}}: {{node.type}}
+      </li>
+    </mat-tree-node>
+
+    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
+      <li>
+        <div class="mat-tree-node">
+          <button mat-icon-button matTreeNodeToggle> <!--[attr.aria.label]="'toggle ' + node.faq"-->
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{nestedTreeControl.isExpanded(node) ? 'expand more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+          {{node.faq}}
+        </div>
+        <ul [class.faq-tree-invinsible]="!nestedTreeControl.isExpanded(node)">
+          <ng-container matTreeNodeOutlet></ng-container>
+        </ul>
+      </li>
+    </mat-nested-tree-node>
+  </mat-tree>
+
+
+
